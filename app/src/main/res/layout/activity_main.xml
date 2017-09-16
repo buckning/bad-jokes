@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/refreshButton"
+        android:gravity="center"
         android:text="TextView" />
 
     <Button
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
+        android:text="Next Joke" />
 
 </RelativeLayout>
 

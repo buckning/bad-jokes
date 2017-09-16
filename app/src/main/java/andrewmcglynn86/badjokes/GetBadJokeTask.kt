@@ -3,8 +3,6 @@ package andrewmcglynn86.badjokes
 import android.os.AsyncTask
 import android.widget.Button
 import android.widget.TextView
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -15,27 +13,9 @@ import java.net.URL
 class GetBadJokeTask(var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, String>() {
 
     override fun doInBackground(vararg params: Void?): String? {
-        var myUrl = URL("https://icanhazdadjoke.com/")
-        var connection = myUrl.openConnection() as HttpURLConnection
-        connection.setRequestProperty("Accept", "text/plain")
-        connection.requestMethod = "GET"
-        connection.connectTimeout = 5000
-        connection.readTimeout = 5000
-
-        var inputString: String
-        try {
-            connection.connect()
-
-            var inputStreamReader = InputStreamReader(connection.inputStream)
-            //https://stackoverflow.com/questions/39500045/in-kotlin-how-do-i-read-the-entire-contents-of-an-inputstream-into-a-string
-            inputString = inputStreamReader.buffered().use {
-                it.readText()
-            }
-        } catch (ex: Exception) {
-            inputString = "Could not load joke";
-        }
-
-        return inputString
+        var jokeUrl = URL("https://icanhazdadjoke.com/")
+        var connection = jokeUrl.openConnection() as HttpURLConnection
+        return BadJoke(connection).getJoke()
     }
 
     override fun onPreExecute() {
