@@ -19,12 +19,20 @@ class GetBadJokeTask(var textBox: TextView, var refreshButton: Button) : AsyncTa
         var connection = myUrl.openConnection() as HttpURLConnection
         connection.setRequestProperty("Accept", "text/plain")
         connection.requestMethod = "GET"
-        connection.connect()
+        connection.connectTimeout = 5000
+        connection.readTimeout = 5000
 
-        var inputStreamReader = InputStreamReader(connection.inputStream)
-        //https://stackoverflow.com/questions/39500045/in-kotlin-how-do-i-read-the-entire-contents-of-an-inputstream-into-a-string
-        var inputString = inputStreamReader.buffered().use {
-            it.readText()
+        var inputString: String
+        try {
+            connection.connect()
+
+            var inputStreamReader = InputStreamReader(connection.inputStream)
+            //https://stackoverflow.com/questions/39500045/in-kotlin-how-do-i-read-the-entire-contents-of-an-inputstream-into-a-string
+            inputString = inputStreamReader.buffered().use {
+                it.readText()
+            }
+        } catch (ex: Exception) {
+            inputString = "Could not load joke";
         }
 
         return inputString
