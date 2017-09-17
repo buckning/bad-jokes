@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
-
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class MainActivity : AppCompatActivity() {
 
 
         refreshButton.setOnClickListener{
-            var joke = GetBadJokeTask(textField, refreshButton)
-            joke.execute()
+            var joke1 = GetBadJokeTask(textField, refreshButton)
+            joke1.execute()
         }
     }
 }

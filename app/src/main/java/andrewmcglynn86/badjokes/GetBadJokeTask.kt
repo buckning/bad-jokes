@@ -15,7 +15,7 @@ class GetBadJokeTask(var textBox: TextView, var refreshButton: Button) : AsyncTa
     override fun doInBackground(vararg params: Void?): String? {
         var jokeUrl = URL("https://icanhazdadjoke.com/")
         var connection = jokeUrl.openConnection() as HttpURLConnection
-        return BadJoke(connection).getJoke()
+        return BadJoke(connection).getJoke().joke
     }
 
     override fun onPreExecute() {

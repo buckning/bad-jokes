@@ -20,6 +20,6 @@ class BadJokeTest {
         val badJoke = BadJoke(httpUrlConnectionMock)
         var joke = badJoke.getJoke()
 
-        assertEquals("Could not load joke", joke)
+        assertEquals("Could not load joke", joke.joke)
     }
 }
