@@ -3,6 +3,7 @@ package andrewmcglynn86.badjokes
 import android.os.AsyncTask
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -10,12 +11,14 @@ import java.net.URL
 /**
  * Created by amcglynn on 15/09/2017.
  */
-class GetBadJokeTask(var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, String>() {
+class GetBadJokeTask(var activity: MainActivity, var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, JokeResponse>() {
 
-    override fun doInBackground(vararg params: Void?): String? {
+    override fun doInBackground(vararg params: Void?): JokeResponse? {
         var jokeUrl = URL("https://icanhazdadjoke.com/")
         var connection = jokeUrl.openConnection() as HttpURLConnection
-        return BadJoke(connection).getJoke().joke
+        val jokeResponse = BadJoke(connection).getJoke()
+
+        return jokeResponse
     }
 
     override fun onPreExecute() {
@@ -23,9 +26,14 @@ class GetBadJokeTask(var textBox: TextView, var refreshButton: Button) : AsyncTa
         refreshButton.setEnabled(false)
     }
 
-    override fun onPostExecute(result: String?) {
+    override fun onPostExecute(result: JokeResponse?) {
         super.onPostExecute(result)
-        textBox.setText(result)
+        textBox.setText(result?.joke)
+
+        if(result?.status != 200) {
+            Toast.makeText(activity, "Could not load joke", Toast.LENGTH_SHORT).show()
+        }
+
         refreshButton.setEnabled(true)
     }
 }
