@@ -11,7 +11,8 @@ import java.net.URL
 /**
  * Created by amcglynn on 15/09/2017.
  */
-class GetBadJokeTask(var activity: MainActivity, var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, JokeResponse>() {
+class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
+                     var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, JokeResponse>() {
 
     override fun doInBackground(vararg params: Void?): JokeResponse? {
         var jokeUrl = URL("https://icanhazdadjoke.com/")
@@ -35,5 +36,6 @@ class GetBadJokeTask(var activity: MainActivity, var textBox: TextView, var refr
         }
 
         refreshButton.setEnabled(true)
+        jokeManager.currentJoke = result!!
     }
 }
