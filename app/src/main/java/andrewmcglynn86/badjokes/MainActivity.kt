@@ -1,5 +1,6 @@
 package andrewmcglynn86.badjokes
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
@@ -24,17 +25,22 @@ class MainActivity : AppCompatActivity() {
         joke.execute()
 
 
-        refreshButton.setOnClickListener {
-            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton)
-            joke1.execute()
-        }
+
 
         var likeButton = findViewById(R.id.likeButton) as Button
         likeButton.setOnClickListener {
             var id = jokeManager.currentJoke.id
+            var likeJokeTask = LikeJokeTask(likeButton, applicationContext, id)
+            likeJokeTask.execute()
             //TODO
             //if the id is not in the DB, save the id to the DB
             //if it is in the DB, remove it from the db
+        }
+
+        refreshButton.setOnClickListener {
+            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton)
+            joke1.execute()
+            likeButton.setBackgroundColor(Color.GRAY)
         }
     }
 }

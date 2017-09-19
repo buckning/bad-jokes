@@ -36,6 +36,7 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         }
 
         refreshButton.setEnabled(true)
+
         jokeManager.currentJoke = result!!
     }
 }
