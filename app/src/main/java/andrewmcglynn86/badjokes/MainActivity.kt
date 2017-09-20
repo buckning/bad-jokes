@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         var likeButton = findViewById(R.id.likeButton) as Button
         likeButton.setOnClickListener {
-            var id = jokeManager.currentJoke.id
-            var likeJokeTask = LikeJokeTask(likeButton, applicationContext, id)
+            var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
             likeJokeTask.execute()
             //TODO
             //if the id is not in the DB, save the id to the DB

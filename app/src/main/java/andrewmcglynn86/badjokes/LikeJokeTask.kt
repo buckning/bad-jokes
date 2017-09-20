@@ -12,16 +12,20 @@ import android.widget.Button
  * Task used to write the joke to the DB to say it was liked. Once completed, it changes the color
  * of the like button
  */
-class LikeJokeTask(var button: Button, var context: Context, val jokeId: String) : AsyncTask<Void, Void, Long>() {
+class LikeJokeTask(var button: Button, var context: Context, val joke: JokeResponse) : AsyncTask<Void, Void, Long>() {
     override fun doInBackground(vararg params: Void?): Long? {
         var dbHelper = DBHelper(context)
 
-        val db = dbHelper.getWritableDatabase()
+        if(joke.status == 200) {
+            val db = dbHelper.getWritableDatabase()
 
-        val values = ContentValues()
-        values.put("joke_text", jokeId)
+            val values = ContentValues()
+            values.put("joke_text", joke.id)
 
-        return db.insert("joke", null, values)
+            return db.insert("joke", null, values)
+        }
+        println("not saving joke " + joke)
+        return -1
     }
 
     override fun onPreExecute() {
@@ -31,6 +35,8 @@ class LikeJokeTask(var button: Button, var context: Context, val jokeId: String)
 
     override fun onPostExecute(result: Long?) {
         super.onPostExecute(result)
-        button.setBackgroundColor(Color.RED);
+        if(result != -1L) {
+            button.setBackgroundColor(Color.RED);
+        }
     }
 }
