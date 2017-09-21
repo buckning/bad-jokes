@@ -1,13 +1,11 @@
 package andrewmcglynn86.badjokes
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,5 +40,17 @@ class MainActivity : AppCompatActivity() {
             joke1.execute()
             likeButton.setBackgroundColor(Color.GRAY)
         }
+
+        var favouritesButton = findViewById(R.id.favouritesButton) as Button
+        favouritesButton.setOnClickListener {
+            println("switching to favourites")
+            switchToFavourites()
+        }
+
+    }
+
+    fun switchToFavourites() {
+        val intent = Intent(this, FavouritesActivity::class.java)
+        startActivity(intent)
     }
 }

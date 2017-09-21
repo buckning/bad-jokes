@@ -30,6 +30,16 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="204dp"
         android:layout_marginEnd="204dp" />
+    <Button
+        android:id="@+id/favouritesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Favourites"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="203dp"
+        android:layout_marginStart="203dp" />
 
 </RelativeLayout>
 
