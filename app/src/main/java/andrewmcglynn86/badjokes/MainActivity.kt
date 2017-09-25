@@ -22,10 +22,6 @@ class MainActivity : AppCompatActivity() {
         var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton)
         joke.execute()
 
-        var likes = GetLikedJokesTask(applicationContext)
-        likes.execute()
-
-
         var likeButton = findViewById(R.id.likeButton) as Button
         likeButton.setOnClickListener {
             var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)

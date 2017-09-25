@@ -21,6 +21,7 @@ class LikeJokeTask(var button: Button, var context: Context, val joke: JokeRespo
 
             val values = ContentValues()
             values.put("joke_text", joke.joke)
+            values.put("online_joke_id", joke.id)
 
             return db.insert("joke", null, values)
         }

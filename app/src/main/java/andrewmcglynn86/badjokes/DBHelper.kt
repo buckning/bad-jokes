@@ -19,9 +19,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     }
 
     companion object {
-        val DB_NAME = "jokes.db"
+        val DB_NAME = "jokes1.db"
         val DB_VERSION = 1
 
-        val CREATE_TABLE = "CREATE TABLE joke (joke_id INTEGER PRIMARY KEY, joke_text TEXT)"
+        val CREATE_TABLE = "CREATE TABLE joke " +
+                "(joke_id INTEGER PRIMARY KEY, online_joke_id TEXT, joke_text TEXT)"
     }
 }
