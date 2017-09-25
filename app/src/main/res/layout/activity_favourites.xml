@@ -4,6 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="andrewmcglynn86.badjokes.FavouritesActivity">
+    tools:context="andrewmcglynn86.badjokes.FavouritesActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
+    <LinearLayout
+        android:id="@+id/favouritesLinearLayout"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints"></LinearLayout>
 </android.support.constraint.ConstraintLayout>

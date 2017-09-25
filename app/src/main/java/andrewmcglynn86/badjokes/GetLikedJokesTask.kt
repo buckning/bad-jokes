@@ -2,11 +2,15 @@ package andrewmcglynn86.badjokes
 
 import android.content.Context
 import android.os.AsyncTask
+import android.widget.LinearLayout
+import android.widget.TextView
+
+
 
 /**
  * Created by amcglynn on 19/09/2017.
  */
-class GetLikedJokesTask(var context: Context) : AsyncTask<Void, Void, MutableList<JokeResponse>>() {
+class GetLikedJokesTask(var context: Context, var linearLayout: LinearLayout) : AsyncTask<Void, Void, MutableList<JokeResponse>>() {
     override fun doInBackground(vararg params: Void?): MutableList<JokeResponse>? {
         var dbHelper = DBHelper(context)
 
@@ -35,6 +39,12 @@ class GetLikedJokesTask(var context: Context) : AsyncTask<Void, Void, MutableLis
     override fun onPostExecute(result: MutableList<JokeResponse>?) {
         super.onPostExecute(result)
 
-        result?.forEach { str -> println("joke = " + str) }
+        result?.forEach {
+            str -> println("joke = " + str)
+            val rowTextView = TextView(context)
+            rowTextView.setText(str.joke)
+            linearLayout.addView(rowTextView)
+
+        }
     }
 }
