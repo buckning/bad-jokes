@@ -20,7 +20,7 @@ class LikeJokeTask(var button: Button, var context: Context, val joke: JokeRespo
             val db = dbHelper.getWritableDatabase()
 
             val values = ContentValues()
-            values.put("joke_text", joke.id)
+            values.put("joke_text", joke.joke)
 
             return db.insert("joke", null, values)
         }
