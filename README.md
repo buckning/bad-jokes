@@ -1,6 +1,5 @@
 ### TO-DO List
- - View favourites. This should open a new activity
- - Unlike joke
+ - Scrollable list of jokes in the favourites
  - Share Joke
  - Error handling
  - Animations for loading

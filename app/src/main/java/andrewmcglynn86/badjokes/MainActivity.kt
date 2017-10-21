@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
                 var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
                 likeJokeTask.execute()
             } else {
-                // The toggle is disabled
+                var unlikeJokeTask = UnlikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
+                unlikeJokeTask.execute()
             }
         }
 
