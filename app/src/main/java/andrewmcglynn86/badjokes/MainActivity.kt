@@ -6,6 +6,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ToggleButton
+import android.widget.CompoundButton
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,14 +26,17 @@ class MainActivity : AppCompatActivity() {
         var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton)
         joke.execute()
 
-        var likeButton = findViewById(R.id.likeButton) as Button
-        likeButton.setOnClickListener {
-            var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
-            likeJokeTask.execute()
-            //TODO
-            //if the id is not in the DB, save the id to the DB
-            //if it is in the DB, remove it from the db
+        val likeButton = findViewById(R.id.likeButton) as ToggleButton
+        likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
+                likeJokeTask.execute()
+            } else {
+                // The toggle is disabled
+            }
         }
+
+
 
         refreshButton.setOnClickListener {
             var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton)

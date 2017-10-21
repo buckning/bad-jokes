@@ -37,7 +37,6 @@ class LikeJokeTask(var button: Button, var context: Context, val joke: JokeRespo
     override fun onPostExecute(result: Long?) {
         super.onPostExecute(result)
         if(result != -1L) {
-            button.setBackgroundColor(Color.RED);
         }
     }
 }
