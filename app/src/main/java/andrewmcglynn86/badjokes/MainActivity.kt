@@ -1,7 +1,6 @@
 package andrewmcglynn86.badjokes
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         refreshButton.setOnClickListener {
             var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton)
             joke1.execute()
-            likeButton.setBackgroundColor(Color.GRAY)
         }
 
         textField.setText("Joke is loading...")

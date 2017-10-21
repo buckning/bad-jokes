@@ -1,16 +1,20 @@
 package andrewmcglynn86.badjokes
 
-import android.support.v7.app.AppCompatActivity
+import android.app.ListActivity
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.widget.ArrayAdapter
 
-class FavouritesActivity : AppCompatActivity() {
+class FavouritesActivity : ListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favourites)
-        var layout = findViewById(R.id.favouritesLinearLayout) as LinearLayout
-        var likes = GetLikedJokesTask(applicationContext, layout)
+
+        var likes = GetLikedJokesTask(this, applicationContext)
         likes.execute()
+    }
+
+    fun setDisplayList(values: Array<String>) {
+        var arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values)
+        listAdapter = arrayAdapter
     }
 }

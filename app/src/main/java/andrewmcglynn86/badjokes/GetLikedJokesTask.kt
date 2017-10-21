@@ -8,21 +8,20 @@ import android.widget.TextView
 /**
  * Created by amcglynn on 19/09/2017.
  */
-class GetLikedJokesTask(var context: Context, var linearLayout: LinearLayout) : AsyncTask<Void, Void, MutableList<JokeResponse>>() {
-    override fun doInBackground(vararg params: Void?): MutableList<JokeResponse>? {
+class GetLikedJokesTask(var favouritesActivity: FavouritesActivity, var context: Context) : AsyncTask<Void, Void, ArrayList<String>>() {
+    override fun doInBackground(vararg params: Void?): ArrayList<String>? {
         var dbHelper = DBHelper(context)
 
         val db = dbHelper.readableDatabase
 
-        var savedJokes = mutableListOf<JokeResponse>()
+        var savedJokes = ArrayList<String>()
 
         val cursor = db.query(
                 "joke", arrayOf("joke_text", "online_joke_id"), null, null, null, null, null)
 
         while (cursor.moveToNext()) {
             val jokeText = cursor.getString(0)
-            val jokeId = cursor.getString(1)
-            savedJokes.add(JokeResponse(jokeId, jokeText, 200))
+            savedJokes.add(jokeText)
         }
         cursor.close()
 
@@ -34,15 +33,12 @@ class GetLikedJokesTask(var context: Context, var linearLayout: LinearLayout) : 
 
     }
 
-    override fun onPostExecute(result: MutableList<JokeResponse>?) {
+    override fun onPostExecute(result: ArrayList<String>?) {
         super.onPostExecute(result)
 
-        result?.forEach {
-            str -> println("joke = " + str)
-            val rowTextView = TextView(context)
-            rowTextView.setText(str.joke)
-            linearLayout.addView(rowTextView)
-
+        if(result != null) {
+            var array = result.toTypedArray()
+            favouritesActivity.setDisplayList(array)
         }
     }
 }
