@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -12,7 +13,7 @@ import java.net.URL
  * Created by amcglynn on 15/09/2017.
  */
 class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
-                     var textBox: TextView, var refreshButton: Button) : AsyncTask<Void, Void, JokeResponse>() {
+                     var textBox: TextView, var refreshButton: Button, var likeButton: ToggleButton) : AsyncTask<Void, Void, JokeResponse>() {
 
     override fun doInBackground(vararg params: Void?): JokeResponse? {
         var jokeUrl = URL("https://icanhazdadjoke.com/")
@@ -38,5 +39,6 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         refreshButton.setEnabled(true)
 
         jokeManager.currentJoke = result!!
+        likeButton.isChecked = false
     }
 }
