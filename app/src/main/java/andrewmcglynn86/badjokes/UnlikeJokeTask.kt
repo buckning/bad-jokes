@@ -5,7 +5,7 @@ import android.os.AsyncTask
 import android.widget.Button
 
 class UnlikeJokeTask (var button: Button, var context: Context, val joke: JokeResponse) : AsyncTask<Void, Void, Long>() {
-    //TODO - this is untested
+
     override fun doInBackground(vararg params: Void?): Long? {
         var dbHelper = DBHelper(context)
         val db = dbHelper.getWritableDatabase()

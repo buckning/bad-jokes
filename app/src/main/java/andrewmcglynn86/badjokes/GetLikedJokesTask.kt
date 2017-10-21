@@ -5,8 +5,6 @@ import android.os.AsyncTask
 import android.widget.LinearLayout
 import android.widget.TextView
 
-
-
 /**
  * Created by amcglynn on 19/09/2017.
  */

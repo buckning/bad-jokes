@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ToggleButton
-import android.widget.CompoundButton
-
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,12 +16,6 @@ class MainActivity : AppCompatActivity() {
         var jokeManager = JokeManager()
 
         setContentView(R.layout.activity_main)
-        var textField = findViewById(R.id.andrew) as TextView
-        var refreshButton = findViewById(R.id.refreshButton) as Button
-
-        textField.setText("Joke is loading...")
-        var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton)
-        joke.execute()
 
         val likeButton = findViewById(R.id.likeButton) as ToggleButton
         likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -37,20 +28,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
+        var textField = findViewById(R.id.andrew) as TextView
+        var refreshButton = findViewById(R.id.refreshButton) as Button
         refreshButton.setOnClickListener {
             var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton)
             joke1.execute()
             likeButton.setBackgroundColor(Color.GRAY)
         }
 
-        var favouritesButton = findViewById(R.id.favouritesButton) as Button
-        favouritesButton.setOnClickListener {
-            println("switching to favourites")
-            switchToFavourites()
+        textField.setText("Joke is loading...")
+        var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton)
+        joke.execute()
+
+        val shareButton = findViewById(R.id.shareButton) as Button
+        shareButton.setOnClickListener {
+            val shareTask = ShareJokeTask(applicationContext, jokeManager.currentJoke)
+            shareTask.execute()
         }
 
+        var favouritesButton = findViewById(R.id.favouritesButton) as Button
+        favouritesButton.setOnClickListener {
+            switchToFavourites()
+        }
     }
 
     fun switchToFavourites() {
