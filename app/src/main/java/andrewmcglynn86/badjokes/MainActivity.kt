@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val shareButton = findViewById(R.id.shareButton) as Button
         shareButton.setOnClickListener {
-            val shareTask = ShareJokeTask(applicationContext, jokeManager.currentJoke)
-            shareTask.execute()
+            startActivity(ShareJoke(jokeManager.currentJoke).getShareIntent())
         }
 
         var favouritesButton = findViewById(R.id.favouritesButton) as Button
