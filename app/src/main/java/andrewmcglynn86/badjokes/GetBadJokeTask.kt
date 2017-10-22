@@ -25,14 +25,7 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         val jokeResponse = BadJoke(connection).getJoke()
 
         var dbHelper = DBHelper(context)
-
-        val db = dbHelper.readableDatabase
-
-        val cursor = db.query(
-                "joke", arrayOf("joke_text", "online_joke_id"),
-                "online_joke_id like ?", arrayOf(jokeResponse.id), null, null, null);
-
-        jokeFoundInDb = cursor.moveToFirst()
+        jokeFoundInDb = JokeDb().jokeExists(dbHelper, jokeResponse.id)
 
         return jokeResponse
     }
