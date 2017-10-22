@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             joke.execute()
         } else {
             textField.setText(initialJoke)
+            jokeManager.currentJoke = JokeResponse("0000000", initialJoke, 200)
         }
 
         val shareButton = findViewById(R.id.shareButton) as Button
