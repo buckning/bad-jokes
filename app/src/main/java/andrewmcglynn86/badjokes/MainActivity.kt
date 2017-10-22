@@ -32,13 +32,13 @@ class MainActivity : AppCompatActivity() {
         var textField = findViewById(R.id.andrew) as TextView
         var refreshButton = findViewById(R.id.refreshButton) as Button
         refreshButton.setOnClickListener {
-            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton)
+            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton, applicationContext)
             joke1.execute()
         }
 
         if(initialJoke == null) {
             textField.setText("Joke is loading...")
-            var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton)
+            var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton, applicationContext)
             joke.execute()
         } else {
             textField.setText(initialJoke)

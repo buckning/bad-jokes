@@ -1,5 +1,5 @@
 ### TO-DO List
- - Liked jokes in favourites can unliked. 
+ - Liked jokes in favourites can be unliked. 
  - Error handling
  - Animations for loading
  - juice up the UI. Try lottie Air BnB lib perhaps?

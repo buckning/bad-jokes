@@ -1,5 +1,6 @@
 package andrewmcglynn86.badjokes
 
+import android.content.Context
 import android.os.AsyncTask
 import android.widget.Button
 import android.widget.TextView
@@ -13,12 +14,25 @@ import java.net.URL
  * Created by amcglynn on 15/09/2017.
  */
 class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
-                     var textBox: TextView, var refreshButton: Button, var likeButton: ToggleButton) : AsyncTask<Void, Void, JokeResponse>() {
+                     var textBox: TextView, var refreshButton: Button, var likeButton: ToggleButton,
+                     var context: Context) : AsyncTask<Void, Void, JokeResponse>() {
+
+    var jokeFoundInDb = false
 
     override fun doInBackground(vararg params: Void?): JokeResponse? {
         var jokeUrl = URL("https://icanhazdadjoke.com/")
         var connection = jokeUrl.openConnection() as HttpURLConnection
         val jokeResponse = BadJoke(connection).getJoke()
+
+        var dbHelper = DBHelper(context)
+
+        val db = dbHelper.readableDatabase
+
+        val cursor = db.query(
+                "joke", arrayOf("joke_text", "online_joke_id"),
+                "online_joke_id like ?", arrayOf(jokeResponse.id), null, null, null);
+
+        jokeFoundInDb = cursor.moveToFirst()
 
         return jokeResponse
     }
@@ -39,6 +53,6 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         refreshButton.setEnabled(true)
 
         jokeManager.currentJoke = result!!
-        likeButton.isChecked = false
+        likeButton.isChecked = jokeFoundInDb
     }
 }
