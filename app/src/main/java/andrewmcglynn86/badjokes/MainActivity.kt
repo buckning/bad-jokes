@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var initialJoke = getIntent().getStringExtra("joke")
+
         var jokeManager = JokeManager()
 
         setContentView(R.layout.activity_main)
@@ -34,9 +36,13 @@ class MainActivity : AppCompatActivity() {
             joke1.execute()
         }
 
-        textField.setText("Joke is loading...")
-        var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton)
-        joke.execute()
+        if(initialJoke == null) {
+            textField.setText("Joke is loading...")
+            var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton)
+            joke.execute()
+        } else {
+            textField.setText(initialJoke)
+        }
 
         val shareButton = findViewById(R.id.shareButton) as Button
         shareButton.setOnClickListener {

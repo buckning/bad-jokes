@@ -1,6 +1,7 @@
 package andrewmcglynn86.badjokes
 
 import android.app.ListActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -25,6 +26,8 @@ class FavouritesActivity : ListActivity() {
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        Toast.makeText(this, jokes.get(position), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("joke", jokes.get(position))
+        startActivity(intent)
     }
 }
