@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
             var jokeTask = GetBadJokeTask(this, jokeManager, textField, refreshButton, applicationContext)
             val joke = jokeTask.execute().get()
 
+            jokeManager.currentJoke = joke
+
             var jokeLikedTask = IsLikedJokesTask(joke.id, this)
             var jokeLiked = jokeLikedTask.execute().get()
 
