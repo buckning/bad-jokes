@@ -14,7 +14,7 @@ import java.net.URL
  * Created by amcglynn on 15/09/2017.
  */
 class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
-                     var textBox: TextView, var refreshButton: Button, var likeButton: ToggleButton,
+                     var textBox: TextView, var refreshButton: Button,
                      var context: Context) : AsyncTask<Void, Void, JokeResponse>() {
 
     var jokeFoundInDb = false
@@ -46,6 +46,5 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         refreshButton.setEnabled(true)
 
         jokeManager.currentJoke = result!!
-        likeButton.isChecked = jokeFoundInDb
     }
 }

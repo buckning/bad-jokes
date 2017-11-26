@@ -32,17 +32,28 @@ class MainActivity : AppCompatActivity() {
         var textField = findViewById(R.id.andrew) as TextView
         var refreshButton = findViewById(R.id.refreshButton) as Button
         refreshButton.setOnClickListener {
-            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton, applicationContext)
+            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton, applicationContext)
             joke1.execute()
         }
 
         if(initialJoke == null) {
             textField.setText("Joke is loading...")
-            var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton, applicationContext)
-            joke.execute()
+            var jokeTask = GetBadJokeTask(this, jokeManager, textField, refreshButton, applicationContext)
+            val joke = jokeTask.execute().get()
+
+            var jokeLikedTask = IsLikedJokesTask(joke.id, this)
+            var jokeLiked = jokeLikedTask.execute().get()
+
+            likeButton.isChecked = jokeLiked
+            println("joke exists = " + jokeLiked)
         } else {
             textField.setText(initialJoke.joke)
             jokeManager.currentJoke = initialJoke
+
+            var jokeLikedTask = IsLikedJokesTask(initialJoke.id, this)
+            var jokeLiked = jokeLikedTask.execute().get()
+
+            likeButton.isChecked = jokeLiked
         }
 
         val shareButton = findViewById(R.id.shareButton) as Button
