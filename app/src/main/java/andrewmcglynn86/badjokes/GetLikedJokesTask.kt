@@ -2,15 +2,13 @@ package andrewmcglynn86.badjokes
 
 import android.content.Context
 import android.os.AsyncTask
-import android.widget.LinearLayout
-import android.widget.TextView
 
 /**
  * Created by amcglynn on 19/09/2017.
  */
-class GetLikedJokesTask(var favouritesActivity: FavouritesActivity, var context: Context) : AsyncTask<Void, Void, ArrayList<String>>() {
+class GetLikedJokesTask(var favouritesActivity: FavouritesActivity, var context: Context) : AsyncTask<Void, Void, ArrayList<JokeResponse>>() {
 
-    override fun doInBackground(vararg params: Void?): ArrayList<String>? {
+    override fun doInBackground(vararg params: Void?): ArrayList<JokeResponse>? {
         var dbHelper = DBHelper(context)
         return JokeDb().getAllJokes(dbHelper)
     }
@@ -20,12 +18,9 @@ class GetLikedJokesTask(var favouritesActivity: FavouritesActivity, var context:
 
     }
 
-    override fun onPostExecute(result: ArrayList<String>?) {
+    override fun onPostExecute(result: ArrayList<JokeResponse>?) {
         super.onPostExecute(result)
 
-        if(result != null) {
-            var array = result.toTypedArray()
-            favouritesActivity.setDisplayList(array)
-        }
+        favouritesActivity.setDisplayList(result)
     }
 }

@@ -9,7 +9,8 @@ import android.widget.ListView
 
 class FavouritesActivity : ListActivity() {
 
-    lateinit var jokes: Array<String>
+    var jokes: ArrayList<JokeResponse>? = null
+    val MAX_JOKE_LENGTH = 127
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,15 +19,29 @@ class FavouritesActivity : ListActivity() {
         likes.execute()
     }
 
-    fun setDisplayList(values: Array<String>) {
+    fun setDisplayList(values: ArrayList<JokeResponse>?) {
         jokes = values
-        var arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values)
+
+        var jokesDisplayed = ArrayList<String>()
+        jokes?.forEach {
+            var jokeText = it.joke
+            jokeText.replace('\n', ' ')
+
+            if(jokeText.length > MAX_JOKE_LENGTH) {
+                jokeText = jokeText.substring(0, MAX_JOKE_LENGTH - 3) + "..."
+            }
+            jokesDisplayed.add(jokeText)
+        }
+
+        var array = jokesDisplayed.toTypedArray()
+
+        var arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array)
         listAdapter = arrayAdapter
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("joke", jokes.get(position))
+        intent.putExtra("joke", jokes?.get(position))
         startActivity(intent)
     }
 }

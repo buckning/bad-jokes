@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var initialJoke = getIntent().getStringExtra("joke")
+        var initialJoke = readJokeFromIntent()
 
         var jokeManager = JokeManager()
 
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
             var joke = GetBadJokeTask(this, jokeManager, textField, refreshButton, likeButton, applicationContext)
             joke.execute()
         } else {
-            textField.setText(initialJoke)
-            jokeManager.currentJoke = JokeResponse("0000000", initialJoke, 200)
+            textField.setText(initialJoke.joke)
+            jokeManager.currentJoke = initialJoke
         }
 
         val shareButton = findViewById(R.id.shareButton) as Button
@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() {
         favouritesButton.setOnClickListener {
             switchToFavourites()
         }
+    }
+
+    fun readJokeFromIntent() : JokeResponse? {
+        return intent.getParcelableExtra("joke")
     }
 
     fun switchToFavourites() {
