@@ -1,5 +1,6 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.connection
 
+import andrewmcglynn86.badjokes.dto.JokeResponse
 import com.fasterxml.jackson.module.kotlin.*
 import java.io.InputStreamReader
 import java.net.HttpURLConnection

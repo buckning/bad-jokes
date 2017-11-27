@@ -1,4 +1,4 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.dto
 
 import android.os.Parcel
 import android.os.Parcelable

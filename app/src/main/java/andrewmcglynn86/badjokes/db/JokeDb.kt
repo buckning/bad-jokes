@@ -1,4 +1,6 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.db
+
+import andrewmcglynn86.badjokes.dto.JokeResponse
 
 class JokeDb {
 

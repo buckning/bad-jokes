@@ -1,5 +1,12 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.activities
 
+import andrewmcglynn86.badjokes.*
+import andrewmcglynn86.badjokes.androidops.ShareJoke
+import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.tasks.GetBadJokeTask
+import andrewmcglynn86.badjokes.tasks.IsLikedJokesTask
+import andrewmcglynn86.badjokes.tasks.LikeJokeTask
+import andrewmcglynn86.badjokes.tasks.UnlikeJokeTask
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

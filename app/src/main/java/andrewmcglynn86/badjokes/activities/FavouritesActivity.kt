@@ -1,5 +1,7 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.activities
 
+import andrewmcglynn86.badjokes.tasks.GetLikedJokesTask
+import andrewmcglynn86.badjokes.dto.JokeResponse
 import android.app.ListActivity
 import android.content.Intent
 import android.os.Bundle

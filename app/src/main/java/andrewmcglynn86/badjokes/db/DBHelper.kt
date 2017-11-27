@@ -1,4 +1,4 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

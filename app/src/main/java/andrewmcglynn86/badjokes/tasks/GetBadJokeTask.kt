@@ -1,11 +1,16 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.tasks
 
+import andrewmcglynn86.badjokes.connection.BadJoke
+import andrewmcglynn86.badjokes.JokeManager
+import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.activities.MainActivity
+import andrewmcglynn86.badjokes.db.DBHelper
+import andrewmcglynn86.badjokes.db.JokeDb
 import android.content.Context
 import android.os.AsyncTask
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.ToggleButton
 import java.net.HttpURLConnection
 import java.net.URL
 

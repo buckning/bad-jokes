@@ -1,5 +1,7 @@
-package andrewmcglynn86.badjokes
+package andrewmcglynn86.badjokes.tasks
 
+import andrewmcglynn86.badjokes.db.DBHelper
+import andrewmcglynn86.badjokes.db.JokeDb
 import android.content.Context
 import android.os.AsyncTask
 

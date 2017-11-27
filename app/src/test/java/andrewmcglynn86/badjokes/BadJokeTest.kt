@@ -1,5 +1,6 @@
 package andrewmcglynn86.badjokes
 
+import andrewmcglynn86.badjokes.connection.BadJoke
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.junit.Assert.*
