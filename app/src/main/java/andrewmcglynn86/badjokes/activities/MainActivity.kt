@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val likeButton = setUpLikeButtonBehaviour(jokeManager)
         val dbHelper = DBHelper(this)
         val jokeDb = JokeDb(dbHelper)
-
         val jokeService = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/"), jokeDb)
 
         var textField = findViewById(R.id.andrew) as TextView
@@ -50,10 +49,7 @@ class MainActivity : AppCompatActivity() {
             textField.setText(initialJoke.joke)
             jokeManager.currentJoke = initialJoke
 
-            var jokeLikedTask = IsLikedJokesTask(jokeService, initialJoke)
-            var jokeLiked = jokeLikedTask.execute().get()
-
-            likeButton.isChecked = jokeLiked
+            updateLikeButton(jokeService, initialJoke, likeButton)
         }
 
         val shareButton = findViewById(R.id.shareButton) as Button
@@ -67,15 +63,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun updateLikeButton(jokeService: JokeService, joke: Joke, likeButton: ToggleButton) {
+        likeButton.isChecked = IsLikedJokesTask(jokeService, joke).execute().get()
+    }
+
     fun loadNewJoke(jokeService: JokeService, refreshButton: Button, textField: TextView,
                     likeButton: ToggleButton, jokeManager: JokeManager) {
         refreshButton.setEnabled(false)
         var result = GetBadJokeTask(jokeService).execute().get()
         textField.setText(result.joke)
         refreshButton.setEnabled(true)
-
-        var jokeLiked = IsLikedJokesTask(jokeService, result).execute().get()
-        likeButton.isChecked = jokeLiked
+        updateLikeButton(jokeService, result, likeButton)
         jokeManager.currentJoke = result
     }
 
