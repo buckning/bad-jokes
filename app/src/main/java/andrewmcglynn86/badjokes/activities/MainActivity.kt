@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         var textField = findViewById(R.id.andrew) as TextView
         var refreshButton = findViewById(R.id.refreshButton) as Button
 
-        val likeButton = setUpLikeButtonBehaviour(jokeDb, jokeManager)
+        val likeButton = setUpLikeButtonBehaviour(jokeService, jokeManager)
 
         refreshButton.setOnClickListener {
             loadNewJoke(jokeService, refreshButton, textField, likeButton, jokeManager)
@@ -79,14 +79,14 @@ class MainActivity : AppCompatActivity() {
         jokeManager.currentJoke = result
     }
 
-    fun setUpLikeButtonBehaviour(jokeDb: JokeDb, jokeManager: JokeManager) : ToggleButton {
+    fun setUpLikeButtonBehaviour(jokeService: JokeService, jokeManager: JokeManager) : ToggleButton {
         val likeButton = findViewById(R.id.likeButton) as ToggleButton
         likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                var likeJokeTask = LikeJokeTask(jokeDb, jokeManager.currentJoke)
+                var likeJokeTask = LikeJokeTask(jokeService, jokeManager.currentJoke)
                 likeJokeTask.execute()
             } else {
-                var unlikeJokeTask = UnlikeJokeTask(jokeDb, jokeManager.currentJoke)
+                var unlikeJokeTask = UnlikeJokeTask(jokeService, jokeManager.currentJoke)
                 unlikeJokeTask.execute()
             }
         }

@@ -17,6 +17,14 @@ class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeD
         }
     }
 
+    fun likeJoke(joke: Joke) {
+        jokeDb.saveJoke(joke)
+    }
+
+    fun unlikeJoke(joke: Joke) {
+        jokeDb.deleteJoke(joke)
+    }
+
     fun isJokeLiked(joke: Joke) : Boolean {
         return jokeDb.jokeExists(joke)
     }
