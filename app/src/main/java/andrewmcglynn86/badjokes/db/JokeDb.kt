@@ -2,19 +2,19 @@ package andrewmcglynn86.badjokes.db
 
 import andrewmcglynn86.badjokes.dto.Joke
 
-class JokeDb {
+class JokeDb (var dbHelper: DBHelper){
 
-    fun jokeExists(dbHelper: DBHelper, jokeId: String) : Boolean {
+    fun jokeExists(joke: Joke) : Boolean {
         val db = dbHelper.readableDatabase
         val cursor = db.query(
                 "joke", arrayOf("joke_text", "online_joke_id"),
-                "online_joke_id like ?", arrayOf(jokeId), null, null, null);
+                "online_joke_id like ?", arrayOf(joke.id), null, null, null);
         var exists = cursor.moveToFirst()
         cursor.close()
         return exists
     }
 
-    fun getAllJokes(dbHelper: DBHelper) : ArrayList<Joke> {
+    fun getAllJokes() : ArrayList<Joke> {
         val db = dbHelper.readableDatabase
         val savedJokes = ArrayList<Joke>()
 

@@ -5,10 +5,7 @@ import andrewmcglynn86.badjokes.dto.Joke
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
-import org.junit.Before
 import org.junit.Test
 import java.io.IOException
 

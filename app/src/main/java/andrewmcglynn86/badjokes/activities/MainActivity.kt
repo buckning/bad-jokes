@@ -2,7 +2,11 @@ package andrewmcglynn86.badjokes.activities
 
 import andrewmcglynn86.badjokes.*
 import andrewmcglynn86.badjokes.androidops.ShareJoke
+import andrewmcglynn86.badjokes.connection.OnlineJokeRepository
+import andrewmcglynn86.badjokes.db.DBHelper
+import andrewmcglynn86.badjokes.db.JokeDb
 import andrewmcglynn86.badjokes.dto.Joke
+import andrewmcglynn86.badjokes.service.JokeService
 import andrewmcglynn86.badjokes.tasks.GetBadJokeTask
 import andrewmcglynn86.badjokes.tasks.IsLikedJokesTask
 import andrewmcglynn86.badjokes.tasks.LikeJokeTask
@@ -26,31 +30,27 @@ class MainActivity : AppCompatActivity() {
         var jokeManager = JokeManager()
 
         val likeButton = setUpLikeButtonBehaviour(jokeManager)
+        val dbHelper = DBHelper(this)
+        val jokeDb = JokeDb(dbHelper)
+
+        val jokeService = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/"), jokeDb)
 
         var textField = findViewById(R.id.andrew) as TextView
         var refreshButton = findViewById(R.id.refreshButton) as Button
+
         refreshButton.setOnClickListener {
-            var joke1 = GetBadJokeTask(this, jokeManager, textField, refreshButton, applicationContext)
-            joke1.execute()
+            loadNewJoke(jokeService, refreshButton, textField, likeButton, jokeManager)
         }
 
         if(initialJoke == null) {
             textField.setText("Joke is loading...")
-            var jokeTask = GetBadJokeTask(this, jokeManager, textField, refreshButton, applicationContext)
-            val joke = jokeTask.execute().get()
 
-            jokeManager.currentJoke = joke
-
-            var jokeLikedTask = IsLikedJokesTask(joke.id, this)
-            var jokeLiked = jokeLikedTask.execute().get()
-
-            likeButton.isChecked = jokeLiked
-            println("joke exists = " + jokeLiked)
+            loadNewJoke(jokeService, refreshButton, textField, likeButton, jokeManager)
         } else {
             textField.setText(initialJoke.joke)
             jokeManager.currentJoke = initialJoke
 
-            var jokeLikedTask = IsLikedJokesTask(initialJoke.id, this)
+            var jokeLikedTask = IsLikedJokesTask(jokeService, initialJoke)
             var jokeLiked = jokeLikedTask.execute().get()
 
             likeButton.isChecked = jokeLiked
@@ -65,6 +65,18 @@ class MainActivity : AppCompatActivity() {
         favouritesButton.setOnClickListener {
             switchToFavourites()
         }
+    }
+
+    fun loadNewJoke(jokeService: JokeService, refreshButton: Button, textField: TextView,
+                    likeButton: ToggleButton, jokeManager: JokeManager) {
+        refreshButton.setEnabled(false)
+        var result = GetBadJokeTask(jokeService).execute().get()
+        textField.setText(result.joke)
+        refreshButton.setEnabled(true)
+
+        var jokeLiked = IsLikedJokesTask(jokeService, result).execute().get()
+        likeButton.isChecked = jokeLiked
+        jokeManager.currentJoke = result
     }
 
     fun setUpLikeButtonBehaviour(jokeManager: JokeManager) : ToggleButton {

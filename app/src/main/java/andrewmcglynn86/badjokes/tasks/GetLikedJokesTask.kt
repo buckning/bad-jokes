@@ -14,12 +14,7 @@ class GetLikedJokesTask(var favouritesActivity: FavouritesActivity, var context:
 
     override fun doInBackground(vararg params: Void?): ArrayList<Joke>? {
         var dbHelper = DBHelper(context)
-        return JokeDb().getAllJokes(dbHelper)
-    }
-
-    override fun onPreExecute() {
-        super.onPreExecute()
-
+        return JokeDb(dbHelper).getAllJokes()
     }
 
     override fun onPostExecute(result: ArrayList<Joke>?) {
