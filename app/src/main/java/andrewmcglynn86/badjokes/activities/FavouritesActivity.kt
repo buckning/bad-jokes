@@ -1,7 +1,11 @@
 package andrewmcglynn86.badjokes.activities
 
+import andrewmcglynn86.badjokes.connection.OnlineJokeRepository
+import andrewmcglynn86.badjokes.db.DBHelper
+import andrewmcglynn86.badjokes.db.JokeDb
 import andrewmcglynn86.badjokes.tasks.GetLikedJokesTask
 import andrewmcglynn86.badjokes.dto.Joke
+import andrewmcglynn86.badjokes.service.JokeService
 import android.app.ListActivity
 import android.content.Intent
 import android.os.Bundle
@@ -11,31 +15,25 @@ import android.widget.ListView
 
 class FavouritesActivity : ListActivity() {
 
-    var jokes: ArrayList<Joke>? = null
-    val MAX_JOKE_LENGTH = 127
+    lateinit var jokes: ArrayList<Joke>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var likes = GetLikedJokesTask(this, applicationContext)
-        likes.execute()
+        val dbHelper = DBHelper(this)
+        val jokeDb = JokeDb(dbHelper)
+        val jokeService = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/"), jokeDb)
+
+        var likes = GetLikedJokesTask(jokeService)
+        jokes = likes.execute().get()
+
+        setDisplayList(jokeService, jokes)
     }
 
-    fun setDisplayList(values: ArrayList<Joke>?) {
-        jokes = values
+    fun setDisplayList(jokeService: JokeService, values: ArrayList<Joke>) {
+        var jokesToDisplay = jokeService.getAllLikeJokesTrimmed(values)
 
-        var jokesDisplayed = ArrayList<String>()
-        jokes?.forEach {
-            var jokeText = it.joke
-            jokeText.replace('\n', ' ')
-
-            if(jokeText.length > MAX_JOKE_LENGTH) {
-                jokeText = jokeText.substring(0, MAX_JOKE_LENGTH - 3) + "..."
-            }
-            jokesDisplayed.add(jokeText)
-        }
-
-        var array = jokesDisplayed.toTypedArray()
+        var array = jokesToDisplay.toTypedArray()
 
         var arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array)
         listAdapter = arrayAdapter
@@ -43,7 +41,7 @@ class FavouritesActivity : ListActivity() {
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("joke", jokes?.get(position))
+        intent.putExtra("joke", jokes.get(position))
         startActivity(intent)
     }
 }

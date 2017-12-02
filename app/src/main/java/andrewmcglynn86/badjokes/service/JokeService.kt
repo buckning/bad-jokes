@@ -6,12 +6,18 @@ import andrewmcglynn86.badjokes.dto.Joke
 
 class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeDb){
 
+    val MAX_JOKE_DISPLAY_LENGTH = 127
+
     fun getJoke() : Joke {
         return try {
             onlineRepository.getJoke()
         } catch (ex: Exception) {
             Joke("0000000", "Could not load joke", 500)
         }
+    }
+
+    fun getAllLikedJokes() : ArrayList<Joke> {
+        return jokeDb.getAllJokes()
     }
 
     fun likeJoke(joke: Joke) {
@@ -24,5 +30,20 @@ class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeD
 
     fun isJokeLiked(joke: Joke) : Boolean {
         return jokeDb.jokeExists(joke)
+    }
+
+    fun getAllLikeJokesTrimmed(values: ArrayList<Joke>) : ArrayList<String> {
+        var jokes = ArrayList<String> ()
+
+        values.forEach {
+            var jokeText = it.joke
+            jokeText.replace('\n', ' ')
+            if(jokeText.length > MAX_JOKE_DISPLAY_LENGTH) {
+                jokeText = jokeText.substring(0, MAX_JOKE_DISPLAY_LENGTH - 3) + "..."
+            }
+            jokes.add(jokeText)
+        }
+
+        return jokes
     }
 }
