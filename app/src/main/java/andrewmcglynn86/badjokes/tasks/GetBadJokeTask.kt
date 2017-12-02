@@ -6,6 +6,7 @@ import andrewmcglynn86.badjokes.dto.Joke
 import andrewmcglynn86.badjokes.activities.MainActivity
 import andrewmcglynn86.badjokes.db.DBHelper
 import andrewmcglynn86.badjokes.db.JokeDb
+import andrewmcglynn86.badjokes.service.JokeService
 import android.content.Context
 import android.os.AsyncTask
 import android.widget.Button
@@ -25,7 +26,7 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
     var jokeFoundInDb = false
 
     override fun doInBackground(vararg params: Void?): Joke? {
-        val jokeResponse = OnlineJokeRepository("https://icanhazdadjoke.com/").getJoke()
+        val jokeResponse = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/")).getJoke()
 
         var dbHelper = DBHelper(context)
         jokeFoundInDb = JokeDb().jokeExists(dbHelper, jokeResponse.id)
