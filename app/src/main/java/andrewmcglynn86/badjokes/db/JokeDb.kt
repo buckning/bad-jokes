@@ -1,6 +1,7 @@
 package andrewmcglynn86.badjokes.db
 
 import andrewmcglynn86.badjokes.dto.Joke
+import android.content.ContentValues
 
 class JokeDb (var dbHelper: DBHelper){
 
@@ -12,6 +13,21 @@ class JokeDb (var dbHelper: DBHelper){
         var exists = cursor.moveToFirst()
         cursor.close()
         return exists
+    }
+
+    fun deleteJoke(joke: Joke) {
+        val db = dbHelper.getWritableDatabase()
+        db.delete("joke", "online_joke_id = ?", arrayOf(joke.id))
+    }
+
+    fun saveJoke(joke: Joke) {
+        val db = dbHelper.getWritableDatabase()
+
+        val values = ContentValues()
+        values.put("joke_text", joke.joke)
+        values.put("online_joke_id", joke.id)
+
+        db.insert("joke", null, values)
     }
 
     fun getAllJokes() : ArrayList<Joke> {
