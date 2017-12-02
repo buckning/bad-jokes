@@ -12,8 +12,8 @@ import java.net.HttpURLConnection
  */
 class BadJokeTest {
 
-//    @Test
-//    fun testBadJokeReturnsErrorStringIfItCannotConnectToTheWebsite() {
+    @Test
+    fun testBadJokeReturnsErrorStringIfItCannotConnectToTheWebsite() {
 //        val httpUrlConnectionMock = mock(HttpURLConnection::class.java)
 //
 //        `doThrow`(IOException("Mocked IO Exception")).`when`(httpUrlConnectionMock).connect()
@@ -22,5 +22,5 @@ class BadJokeTest {
 //        var joke = badJoke.getJoke()
 //
 //        assertEquals("Could not load joke", joke.joke)
-//    }
+    }
 }

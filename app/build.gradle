@@ -42,7 +42,7 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.2'
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.+'
+    testCompile 'org.mockito:mockito-core:2.8.9'
 }
 repositories {
     mavenCentral()

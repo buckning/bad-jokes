@@ -6,8 +6,13 @@ import andrewmcglynn86.badjokes.dto.Joke
 /**
  * Created by amcglynn on 02/12/2017.
  */
-class JokeService {
-    fun getJoke(jokeUrl: String) : Joke {
-        return OnlineJokeRepository(jokeUrl).getJoke()
+class JokeService (val onlineRepository: OnlineJokeRepository){
+
+    fun getJoke() : Joke {
+        return try {
+            onlineRepository.getJoke()
+        } catch (ex: Exception) {
+            Joke("0000000", "Could not load joke", 500)
+        }
     }
 }
