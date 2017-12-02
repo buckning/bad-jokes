@@ -1,9 +1,9 @@
 package andrewmcglynn86.badjokes.androidops
 
-import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.dto.Joke
 import android.content.Intent
 
-class ShareJoke(val joke: JokeResponse) {
+class ShareJoke(val joke: Joke) {
     fun getShareIntent() : Intent? {
         if(joke.status != 200) {
             return null

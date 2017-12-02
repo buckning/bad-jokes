@@ -3,7 +3,7 @@ package andrewmcglynn86.badjokes.dto
 import android.os.Parcel
 import android.os.Parcelable
 
-class JokeResponse (val id: String, val joke: String, val status: Int): Parcelable {
+class Joke(val id: String, val joke: String, val status: Int): Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
@@ -20,12 +20,12 @@ class JokeResponse (val id: String, val joke: String, val status: Int): Parcelab
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<JokeResponse> {
-        override fun createFromParcel(parcel: Parcel): JokeResponse {
-            return JokeResponse(parcel)
+    companion object CREATOR : Parcelable.Creator<Joke> {
+        override fun createFromParcel(parcel: Parcel): Joke {
+            return Joke(parcel)
         }
 
-        override fun newArray(size: Int): Array<JokeResponse?> {
+        override fun newArray(size: Int): Array<Joke?> {
             return arrayOfNulls(size)
         }
     }

@@ -2,7 +2,7 @@ package andrewmcglynn86.badjokes.activities
 
 import andrewmcglynn86.badjokes.*
 import andrewmcglynn86.badjokes.androidops.ShareJoke
-import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.dto.Joke
 import andrewmcglynn86.badjokes.tasks.GetBadJokeTask
 import andrewmcglynn86.badjokes.tasks.IsLikedJokesTask
 import andrewmcglynn86.badjokes.tasks.LikeJokeTask
@@ -19,22 +19,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContentView(R.layout.activity_main)
+
         var initialJoke = readJokeFromIntent()
 
         var jokeManager = JokeManager()
 
-        setContentView(R.layout.activity_main)
-
-        val likeButton = findViewById(R.id.likeButton) as ToggleButton
-        likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
-                likeJokeTask.execute()
-            } else {
-                var unlikeJokeTask = UnlikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
-                unlikeJokeTask.execute()
-            }
-        }
+        val likeButton = setUpLikeButtonBehaviour(jokeManager)
 
         var textField = findViewById(R.id.andrew) as TextView
         var refreshButton = findViewById(R.id.refreshButton) as Button
@@ -76,7 +67,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun readJokeFromIntent() : JokeResponse? {
+    fun setUpLikeButtonBehaviour(jokeManager: JokeManager) : ToggleButton {
+        val likeButton = findViewById(R.id.likeButton) as ToggleButton
+        likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                var likeJokeTask = LikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
+                likeJokeTask.execute()
+            } else {
+                var unlikeJokeTask = UnlikeJokeTask(likeButton, applicationContext, jokeManager.currentJoke)
+                unlikeJokeTask.execute()
+            }
+        }
+        return likeButton
+    }
+
+    fun readJokeFromIntent() : Joke? {
         return intent.getParcelableExtra("joke")
     }
 

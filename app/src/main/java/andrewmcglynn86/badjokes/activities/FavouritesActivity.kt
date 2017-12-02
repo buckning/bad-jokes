@@ -1,7 +1,7 @@
 package andrewmcglynn86.badjokes.activities
 
 import andrewmcglynn86.badjokes.tasks.GetLikedJokesTask
-import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.dto.Joke
 import android.app.ListActivity
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import android.widget.ListView
 
 class FavouritesActivity : ListActivity() {
 
-    var jokes: ArrayList<JokeResponse>? = null
+    var jokes: ArrayList<Joke>? = null
     val MAX_JOKE_LENGTH = 127
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class FavouritesActivity : ListActivity() {
         likes.execute()
     }
 
-    fun setDisplayList(values: ArrayList<JokeResponse>?) {
+    fun setDisplayList(values: ArrayList<Joke>?) {
         jokes = values
 
         var jokesDisplayed = ArrayList<String>()

@@ -1,6 +1,6 @@
 package andrewmcglynn86.badjokes.tasks
 
-import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.dto.Joke
 import andrewmcglynn86.badjokes.db.DBHelper
 import android.content.Context
 import android.os.AsyncTask
@@ -13,7 +13,7 @@ import android.widget.Button
  * Task used to write the joke to the DB to say it was liked. Once completed, it changes the color
  * of the like button
  */
-class LikeJokeTask(var button: Button, var context: Context, val joke: JokeResponse) : AsyncTask<Void, Void, Long>() {
+class LikeJokeTask(var button: Button, var context: Context, val joke: Joke) : AsyncTask<Void, Void, Long>() {
     override fun doInBackground(vararg params: Void?): Long? {
         var dbHelper = DBHelper(context)
 

@@ -1,8 +1,8 @@
 package andrewmcglynn86.badjokes.tasks
 
-import andrewmcglynn86.badjokes.connection.BadJoke
+import andrewmcglynn86.badjokes.connection.OnlineJokeRepository
 import andrewmcglynn86.badjokes.JokeManager
-import andrewmcglynn86.badjokes.dto.JokeResponse
+import andrewmcglynn86.badjokes.dto.Joke
 import andrewmcglynn86.badjokes.activities.MainActivity
 import andrewmcglynn86.badjokes.db.DBHelper
 import andrewmcglynn86.badjokes.db.JokeDb
@@ -20,14 +20,12 @@ import java.net.URL
  */
 class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
                      var textBox: TextView, var refreshButton: Button,
-                     var context: Context) : AsyncTask<Void, Void, JokeResponse>() {
+                     var context: Context) : AsyncTask<Void, Void, Joke>() {
 
     var jokeFoundInDb = false
 
-    override fun doInBackground(vararg params: Void?): JokeResponse? {
-        var jokeUrl = URL("https://icanhazdadjoke.com/")
-        var connection = jokeUrl.openConnection() as HttpURLConnection
-        val jokeResponse = BadJoke(connection).getJoke()
+    override fun doInBackground(vararg params: Void?): Joke? {
+        val jokeResponse = OnlineJokeRepository("https://icanhazdadjoke.com/").getJoke()
 
         var dbHelper = DBHelper(context)
         jokeFoundInDb = JokeDb().jokeExists(dbHelper, jokeResponse.id)
@@ -40,7 +38,7 @@ class GetBadJokeTask(var activity: MainActivity, var jokeManager: JokeManager,
         refreshButton.setEnabled(false)
     }
 
-    override fun onPostExecute(result: JokeResponse?) {
+    override fun onPostExecute(result: Joke?) {
         super.onPostExecute(result)
         textBox.setText(result?.joke)
 
