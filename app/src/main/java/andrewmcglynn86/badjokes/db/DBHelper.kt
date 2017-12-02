@@ -4,9 +4,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-/**
- * Created by amcglynn on 19/09/2017.
- */
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {

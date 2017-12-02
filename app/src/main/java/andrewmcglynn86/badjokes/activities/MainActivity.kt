@@ -25,23 +25,18 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        var initialJoke = readJokeFromIntent()
-
-        var jokeManager = JokeManager()
-
+        val initialJoke = readJokeFromIntent()
+        val jokeManager = JokeManager()
 
         val dbHelper = DBHelper(this)
         val jokeDb = JokeDb(dbHelper)
         val jokeService = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/"), jokeDb)
 
-        var textField = findViewById(R.id.andrew) as TextView
-        var refreshButton = findViewById(R.id.refreshButton) as Button
-
-        val likeButton = setUpLikeButtonBehaviour(jokeService, jokeManager)
-
-        refreshButton.setOnClickListener {
-            loadNewJoke(jokeService, refreshButton, textField, likeButton, jokeManager)
-        }
+        val textField = findViewById(R.id.andrew) as TextView
+        val refreshButton = findViewById(R.id.refreshButton) as Button
+        val likeButton = findViewById(R.id.likeButton) as ToggleButton
+        val shareButton = findViewById(R.id.shareButton) as Button
+        var favouritesButton = findViewById(R.id.favouritesButton) as Button
 
         if(initialJoke == null) {
             textField.setText("Joke is loading...")
@@ -54,12 +49,16 @@ class MainActivity : AppCompatActivity() {
             updateLikeButton(jokeService, initialJoke, likeButton)
         }
 
-        val shareButton = findViewById(R.id.shareButton) as Button
+        setUpLikeButtonBehaviour(likeButton, jokeService, jokeManager)
+
+        refreshButton.setOnClickListener {
+            loadNewJoke(jokeService, refreshButton, textField, likeButton, jokeManager)
+        }
+
         shareButton.setOnClickListener {
             startActivity(ShareJoke(jokeManager.currentJoke).getShareIntent())
         }
 
-        var favouritesButton = findViewById(R.id.favouritesButton) as Button
         favouritesButton.setOnClickListener {
             switchToFavourites()
         }
@@ -79,8 +78,8 @@ class MainActivity : AppCompatActivity() {
         jokeManager.currentJoke = result
     }
 
-    fun setUpLikeButtonBehaviour(jokeService: JokeService, jokeManager: JokeManager) : ToggleButton {
-        val likeButton = findViewById(R.id.likeButton) as ToggleButton
+    fun setUpLikeButtonBehaviour(likeButton: ToggleButton, jokeService: JokeService,
+                                 jokeManager: JokeManager) {
         likeButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 var likeJokeTask = LikeJokeTask(jokeService, jokeManager.currentJoke)
@@ -90,7 +89,6 @@ class MainActivity : AppCompatActivity() {
                 unlikeJokeTask.execute()
             }
         }
-        return likeButton
     }
 
     fun readJokeFromIntent() : Joke? {

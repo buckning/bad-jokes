@@ -4,9 +4,6 @@ import andrewmcglynn86.badjokes.connection.OnlineJokeRepository
 import andrewmcglynn86.badjokes.db.JokeDb
 import andrewmcglynn86.badjokes.dto.Joke
 
-/**
- * Created by amcglynn on 02/12/2017.
- */
 class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeDb){
 
     fun getJoke() : Joke {
