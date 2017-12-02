@@ -1,26 +1,52 @@
 package andrewmcglynn86.badjokes.service
 
 import andrewmcglynn86.badjokes.connection.OnlineJokeRepository
+import andrewmcglynn86.badjokes.dto.Joke
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.doThrow
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import java.io.IOException
 
 /**
  * Created by amcglynn on 02/12/2017.
  */
 class JokeServiceTest {
 
-    @Mock
-    lateinit var mockRepository: OnlineJokeRepository
+    @Test
+    fun testJokeServiceReturnsJokeWhenOnlineRepositoryCompletesSuccessfully() {
+        val mockJoke = Joke("6EYLBscN7wc", "This furniture store keeps emailing me, " +
+                "all I wanted was one night stand!", 200)
 
-    @Before
-    fun init() {
-        MockitoAnnotations.initMocks(this)
+        var mockRepository: OnlineJokeRepository = mock<OnlineJokeRepository> {
+            on {
+                getJoke()
+            } doReturn (mockJoke)
+        }
+
+        val joke = JokeService(mockRepository).getJoke()
+
+        assertEquals(joke.status, 200)
+        assertEquals(joke.id, "6EYLBscN7wc")
+        assertEquals(joke.joke, "This furniture store keeps emailing me, " +
+                "all I wanted was one night stand!")
     }
 
     @Test
-    fun testJokeServiceReturnsJokeWhenOnlineRepositoryCompletesSuccessfully() {
-        JokeService(mockRepository).getJoke()
+    fun testJokeServiceReturnsErrorJokeMessageWhenOnlineRepositoryCannotBeReached() {
+        var mockRepository: OnlineJokeRepository = mock<OnlineJokeRepository> {
+            on {
+                getJoke()
+            } doThrow IOException("Failed to connect to repo")
+        }
+
+        val joke = JokeService(mockRepository).getJoke()
+        assertEquals(joke.status, 500)
+        assertEquals(joke.id, "0000000")
+        assertEquals(joke.joke, "Could not load joke")
     }
 }
