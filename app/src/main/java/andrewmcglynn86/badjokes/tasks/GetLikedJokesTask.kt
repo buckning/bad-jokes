@@ -7,6 +7,6 @@ import android.os.AsyncTask
 class GetLikedJokesTask(var jokeService: JokeService) : AsyncTask<Void, Void, ArrayList<Joke>>() {
 
     override fun doInBackground(vararg params: Void?): ArrayList<Joke>? {
-        return jokeService.getAllLikedJokes()
+        return jokeService.getLikedJokes(25, 0)
     }
 }

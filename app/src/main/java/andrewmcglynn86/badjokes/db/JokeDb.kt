@@ -34,6 +34,8 @@ class JokeDb (var dbHelper: DBHelper){
         val db = dbHelper.readableDatabase
         val savedJokes = ArrayList<Joke>()
 
+        println("reading from db at offset ${offset} and limit ${limit}")
+
         val cursor = db.query(
                 "joke", arrayOf("joke_text", "online_joke_id"), null,
                 null, null, null, null, "${offset}, ${limit}")

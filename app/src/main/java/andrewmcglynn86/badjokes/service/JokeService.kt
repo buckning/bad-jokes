@@ -47,10 +47,8 @@ class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeD
         return jokes
     }
 
-    fun updateLikedJokes() {
+    fun getLikedJokes(limit: Int, offset: Int) : ArrayList<Joke> {
         println("reading more from DB...")
-        val result = jokeDb.getJokes(20, 10)
-
-        println(result)
+        return jokeDb.getJokes(limit, offset)
     }
 }

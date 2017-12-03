@@ -33,10 +33,14 @@ class FavouritesActivity : ListActivity() {
         setDisplayList(jokeService, jokes)
 
         listView.setOnScrollListener(object: AbsListView.OnScrollListener {
+            var updating = false
             override fun onScroll(view: AbsListView, firstVisibleItem: Int,
                                   visibleItemCount: Int, totalItemCount: Int) {
-                if (isAtEndOfList()) {
+                if (isAtEndOfList() && !updating) {
+                    updating = true
                     updateDisplayList(jokeService)
+                    setDisplayList(jokeService, jokes)
+                    updating = false
                 }
             }
 
@@ -52,7 +56,8 @@ class FavouritesActivity : ListActivity() {
 
     fun updateDisplayList(jokeService: JokeService) {
         println("updating list...")
-        jokeService.updateLikedJokes()
+
+        jokes.addAll(jokeService.getLikedJokes(25, jokes.size))
     }
 
     fun setDisplayList(jokeService: JokeService, values: ArrayList<Joke>) {
