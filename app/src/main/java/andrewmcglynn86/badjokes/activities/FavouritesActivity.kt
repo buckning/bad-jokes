@@ -12,6 +12,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.AbsListView
+
+
 
 class FavouritesActivity : ListActivity() {
 
@@ -28,6 +31,28 @@ class FavouritesActivity : ListActivity() {
         jokes = likes.execute().get()
 
         setDisplayList(jokeService, jokes)
+
+        listView.setOnScrollListener(object: AbsListView.OnScrollListener {
+            override fun onScroll(view: AbsListView, firstVisibleItem: Int,
+                                  visibleItemCount: Int, totalItemCount: Int) {
+                if (isAtEndOfList()) {
+                    updateDisplayList(jokeService)
+                }
+            }
+
+            override fun onScrollStateChanged(absListView: AbsListView, i: Int) { }
+
+            fun isAtEndOfList() : Boolean {
+                return (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1
+                        && listView.getChildAt(listView.getChildCount() - 1)
+                        .getBottom() <= listView.getHeight())
+            }
+        })
+    }
+
+    fun updateDisplayList(jokeService: JokeService) {
+        println("updating list...")
+        jokeService.updateLikedJokes()
     }
 
     fun setDisplayList(jokeService: JokeService, values: ArrayList<Joke>) {
@@ -43,5 +68,19 @@ class FavouritesActivity : ListActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("joke", jokes.get(position))
         startActivity(intent)
+    }
+
+    internal class ScrollListenerTest(var list: ListView) : AbsListView.OnScrollListener {
+        override fun onScroll(view: AbsListView, firstVisibleItem: Int,
+                              visibleItemCount: Int, totalItemCount: Int) {
+            if (list.getLastVisiblePosition() == list.getAdapter().getCount() - 1
+                    && list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight()) {
+                println("end")
+            }
+        }
+
+        override fun onScrollStateChanged(absListView: AbsListView, i: Int) {
+            //no-op
+        }
     }
 }
