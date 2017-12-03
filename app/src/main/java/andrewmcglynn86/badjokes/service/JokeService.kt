@@ -49,5 +49,8 @@ class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeD
 
     fun updateLikedJokes() {
         println("reading more from DB...")
+        val result = jokeDb.getJokes(20, 10)
+
+        println(result)
     }
 }

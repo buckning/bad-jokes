@@ -30,6 +30,21 @@ class JokeDb (var dbHelper: DBHelper){
         db.insert("joke", null, values)
     }
 
+    fun getJokes(limit: Int, offset: Int) : ArrayList<Joke> {
+        val db = dbHelper.readableDatabase
+        val savedJokes = ArrayList<Joke>()
+
+        val cursor = db.query(
+                "joke", arrayOf("joke_text", "online_joke_id"), null,
+                null, null, null, null, "${offset}, ${limit}")
+
+        while (cursor.moveToNext()) {
+            savedJokes.add(Joke(cursor.getString(1), cursor.getString(0), 200))
+        }
+        cursor.close()
+        return savedJokes
+    }
+
     fun getAllJokes() : ArrayList<Joke> {
         val db = dbHelper.readableDatabase
         val savedJokes = ArrayList<Joke>()
