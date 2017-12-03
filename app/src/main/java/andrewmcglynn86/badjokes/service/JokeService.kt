@@ -32,6 +32,10 @@ class JokeService (val onlineRepository: OnlineJokeRepository, var jokeDb: JokeD
         return jokeDb.jokeExists(joke)
     }
 
+    fun getNumLikedJokes() : Long {
+        return jokeDb.getJokesCount()
+    }
+
     fun getAllLikeJokesTrimmed(values: ArrayList<Joke>) : ArrayList<String> {
         var jokes = ArrayList<String> ()
 

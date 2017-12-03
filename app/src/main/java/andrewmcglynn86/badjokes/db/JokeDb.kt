@@ -2,6 +2,10 @@ package andrewmcglynn86.badjokes.db
 
 import andrewmcglynn86.badjokes.dto.Joke
 import android.content.ContentValues
+import android.database.DatabaseUtils
+import android.database.sqlite.SQLiteDatabase
+
+
 
 class JokeDb (var dbHelper: DBHelper){
 
@@ -28,6 +32,13 @@ class JokeDb (var dbHelper: DBHelper){
         values.put("online_joke_id", joke.id)
 
         db.insert("joke", null, values)
+    }
+
+    fun getJokesCount() : Long {
+        val db = dbHelper.readableDatabase
+        val count = DatabaseUtils.queryNumEntries(db, "joke")
+        db.close()
+        return count
     }
 
     fun getJokes(limit: Int, offset: Int) : ArrayList<Joke> {

@@ -38,8 +38,13 @@ class FavouritesActivity : ListActivity() {
                                   visibleItemCount: Int, totalItemCount: Int) {
                 if (isAtEndOfList() && !updating) {
                     updating = true
-                    updateDisplayList(jokeService)
-                    setDisplayList(jokeService, jokes)
+                    val numOfJokes = jokeService.getNumLikedJokes()
+
+                    println("jokes in db ${numOfJokes} jokes in list ${jokes.size}")
+                    if(jokes.size < numOfJokes) {
+                        updateDisplayList(jokeService)
+                        setDisplayList(jokeService, jokes)
+                    }
                     updating = false
                 }
             }
@@ -56,7 +61,6 @@ class FavouritesActivity : ListActivity() {
 
     fun updateDisplayList(jokeService: JokeService) {
         println("updating list...")
-
         jokes.addAll(jokeService.getLikedJokes(25, jokes.size))
     }
 
