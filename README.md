@@ -15,12 +15,13 @@ https://icanhazdadjoke.com
 
 
 ### TO-DO List
- - Animations for loading
+ - Animations for loading. Have a clock counting down which is like a watermark
  - Reskin the UI
  - juice up the UI. Try lottie Air BnB lib perhaps?
  - back button, gesture
- - Include Google advertising
+ - Include Google banner advertising
  - Include UI testing
+ - handle back button events. We shouldn't have stale data in an activity
  - Bug - pagination, when we reach the end of the list of favourites, we load more jokes from the
         DB. The list is reset to the top of the listview and not from the current point
  - Bug - when starting up, if a joke was already liked, we check the like check box, this triggers

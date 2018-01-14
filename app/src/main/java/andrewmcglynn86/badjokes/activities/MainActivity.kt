@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val jokeDb = JokeDb(dbHelper)
         val jokeService = JokeService(OnlineJokeRepository("https://icanhazdadjoke.com/"), jokeDb)
 
-        val textField = findViewById(R.id.andrew) as TextView
+        val textField = findViewById(R.id.joke_text) as TextView
         val refreshButton = findViewById(R.id.refreshButton) as Button
         val likeButton = findViewById(R.id.likeButton) as ToggleButton
         val shareButton = findViewById(R.id.shareButton) as Button
